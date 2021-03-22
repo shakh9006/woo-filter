@@ -2,9 +2,9 @@ let mix = require('laravel-mix')
 require('laravel-mix-clean')
 
 const isDev = process.env.NODE_ENV === 'development'
-const srcPath = extraPath => {
+const srcPath = (extraPath, _path = 'admin') => {
 	if ( extraPath )
-		return path.resolve(__dirname, `./assets/js/${extraPath}`)
+		return path.resolve(__dirname, `./assets/src/${_path}/js/${extraPath}`)
 
 	return path.resolve(__dirname, `./assets/js`)
 }
@@ -12,7 +12,12 @@ const srcPath = extraPath => {
 mix.webpackConfig({
 	resolve: {
 		extensions: ['.js', '.json'],
-		alias: {},
+		alias: {
+			'@store'  	   : srcPath('store'),
+			'@utils'  	   : srcPath('utils'),
+			'@components'  : srcPath('components'),
+			'@js'	  	   : srcPath(''),
+		},
 	},
 	devtool: isDev ? 'source-map' : ''
 });
@@ -29,12 +34,11 @@ mix.webpackConfig({
  */
 
 mix.setResourceRoot('../../')
+	.js(srcPath('app.js'), 'assets/dist/js/admin.js')
 
-mix.setResourceRoot('../../')
 
-
-mix.setResourceRoot('../../')
-	.disableNotifications();
+// mix.setResourceRoot('../../')
+// 	.disableNotifications();
 
 // Full API
 // mix.js(src, output);
