@@ -1,6 +1,6 @@
 <?php
 
-namespace wf\Classes\Base;
+namespace wf\Classes\Base\Fields;
 
 use wf\Classes\Base\WF_Fields;
 
@@ -8,7 +8,19 @@ use wf\Classes\Base\WF_Fields;
  * Class WF_Field_Range
  * @package wf\Classes\Base
  */
-abstract class WF_Field_Range extends WF_Fields {
+class WF_Field_Range extends WF_Fields {
+
+    /**
+     * WF_Field_Range constructor.
+     * @param $args
+     */
+    public function __construct($args) {
+        parent::__construct($args);
+        $this->is_multi = wf_isset_helper($args, 'is_multi');
+        $this->min      = wf_isset_helper($args, 'min');
+        $this->max      = wf_isset_helper($args, 'max');
+        $this->step     = wf_isset_helper($args, 'step');
+    }
 
     /**
      * Range field multi toggle

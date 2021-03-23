@@ -6,7 +6,29 @@ namespace wf\Classes\Base;
  * @package wf\Classes\Field
  */
 abstract class WF_Fields {
-    const TYPE_PRICE = 'price';
+
+    /**
+     * WF_Fields constructor.
+     * @param $args
+     */
+    protected function __construct($args) {
+        $this->label          = wf_isset_helper($args, 'label');
+        $this->description    = wf_isset_helper($args, 'description');
+        $this->toggle_label   = wf_isset_helper($args, 'toggle_label', true);
+        $this->included_types = wf_isset_helper($args, 'types', []);
+    }
+
+    /**
+     * Types List
+     */
+    const TYPE_PRICE              = 'price';
+    const TYPE_COLOR              = 'color';
+    const TYPE_RATING             = 'rating';
+    const TYPE_ON_SALE            = 'on_sale';
+    const TYPE_SORT_BY            = 'sort_by';
+    const TYPE_PRODUCT_CATEGORIES = 'product_categories';
+    const TYPE_PRODUCT_TAGS       = 'product_tags';
+
     /**
      * Field Label
      * @var $label

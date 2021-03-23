@@ -2,7 +2,7 @@
 
 namespace wf\Classes;
 
-use wf\Classes\WF_Fields;
+use wf\Classes\Base\Factory\WF_Field_Factory;
 
 /**
  * Class WF_Settings_data
@@ -28,7 +28,6 @@ class WF_Settings_data {
                 'fields' => self::get_fields(),
             ];
 
-
             $result['message'] = wf_text_domain('Admin data got successfully');
             $result['success'] = true;
             $result['status']  = 'success';
@@ -40,7 +39,11 @@ class WF_Settings_data {
      * @return array
      */
     private static function get_fields() {
-//        $wf_fields = new WF_Fields();
+        $result = [
+            WF_Field_Factory::get_data('checkbox', [
+                'label' => __('')
+            ]),
+        ];
 
 
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace wf\Classes\Base;
+namespace wf\Classes\Base\Fields;
 
 use wf\Classes\Base\WF_Fields;
 
@@ -8,7 +8,17 @@ use wf\Classes\Base\WF_Fields;
  * Class WF_Field_Input
  * @package wf\Classes\Base
  */
-abstract class WF_Field_Input extends WF_Fields {
+class WF_Field_Input extends WF_Fields {
+
+    /**
+     * WF_Field_Input constructor.
+     * @param $args
+     */
+    public function __construct($args) {
+        parent::__construct($args);
+        $this->placeholder = wf_isset_helper($args, 'placeholder');
+    }
+
     /**
      * Input field placeholder
      * @var $placeholder
