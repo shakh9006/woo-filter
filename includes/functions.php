@@ -66,3 +66,23 @@ function wf_load_admin_scripts($other_data = [], $deps = []) {
 
     wp_add_inline_script('wf-admin-app', "var wf_settings_data = JSON.parse('". wf_convert_content(json_encode($data)) ."');", 'before');
 }
+
+/**
+ * Text domain helper function
+ * @param $text
+ * @return string|void
+ */
+function wf_text_domain($text) {
+    return __($text, 'woo-filter');
+}
+
+function wf_isset_helper($data, $property, $default = '') {
+    if ( is_array( $data ) && isset( $data[$property] ) ) {
+        return $data[$property];
+    }
+    else if ( is_object( $data ) && isset( $data->$property ) ) {
+        return $data->$property;
+    }
+
+    return $default;
+}
