@@ -1,0 +1,149 @@
+.wf-draggable-container {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #b8c7d6;
+
+  &.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wf-draggable-items {
+    position: relative;
+    border-radius: 4px;
+    margin: 0 auto 10px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &.sortable-chosen {
+      box-shadow: 0 15px 15px -15px #000000;
+    }
+
+    &.sortable-ghost {
+      opacity: 0.5;
+      background-color: #efefef;
+    }
+  }
+
+  .wf-draggable-panel-items-top {
+    padding: 0 5px;
+    display: flex;
+    border-radius: 4px;
+    background-color: #ffffff;
+    justify-content: space-between;
+
+    .title {
+      width: 70%;
+
+      .handle {
+        left: -5px;
+        float: left;
+        width: 49px;
+        height: 100%;
+        cursor: move;
+        display: flex;
+        padding: 0 6px;
+        font-size: 18px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+
+        color: #aaaaaa;
+        border-right: 1px solid #dddddd;
+
+        &:hover {
+          color: #303441;
+        }
+      }
+
+      p {
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 17px 15px 15px;
+        margin: 0;
+        text-overflow: ellipsis;
+        max-width: calc(100% - 66px);
+      }
+
+      .required {
+        float: left;
+        font-size: 14px;
+        line-height: 13px;
+        padding: 18px 5px;
+        color: #eb0000;
+      }
+    }
+
+    .action {
+      display: flex;
+      align-items: center;
+
+      .btn {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        margin-right: 20px;
+        position: relative;
+        display: inline-block;
+        border: 1px solid #44515f;
+
+        i {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translateX(-50%) translateY(-50%);
+        }
+
+        &.toggle {
+          color: #44515f;
+          border-radius: 50%;
+          opacity: 0.5;
+
+          i {
+            font-size: 13px;
+          }
+        }
+
+        &.remove {
+          color: #fff;
+          border-radius: 4px;
+          background-color: #44515f;
+          transition: color .2s linear, background-color .2s linear;
+
+          &:hover {
+            color: #44515f;
+            background-color: #ffffff;
+          }
+        }
+
+        &:last-child {
+          margin-right: 15px;
+        }
+      }
+    }
+  }
+
+  .wf-draggable-panel-items-inside {
+    border-top: 1px solid #dddddd;
+    padding: 5px;
+  }
+
+  &.user-role {
+    max-width: 1000px;
+  }
+}
+
+
+.draggable-row {
+  display: flex;
+
+  .draggable-col {
+    flex: 1 1 33%;
+  }
+}

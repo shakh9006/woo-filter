@@ -2,10 +2,10 @@
 namespace wf\Classes;
 
 /**
- * Class WFAdminMenu
+ * Class WF_AdminMenu
  * @package wf\Classes
  */
-class WFAdminMenu {
+class WF_AdminMenu {
 
     public function __construct()
     {
@@ -13,10 +13,10 @@ class WFAdminMenu {
     }
 
     /**
-     * @return WFAdminMenu
+     * @return WF_AdminMenu
      */
     public static function init() {
-       return new WFAdminMenu();
+       return new WF_AdminMenu();
     }
 
     public function wf_settings_menu() {

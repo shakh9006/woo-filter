@@ -33,3 +33,7 @@ if ( ! is_textdomain_loaded( 'woo-filter' ) ) {
 }
 
 require_once __DIR__ . '/includes/autoload.php';
+
+register_activation_hook( __FILE__,  'wf_plugin_activation');
+register_deactivation_hook( __FILE__, 'wf_plugin_deactivation');
+register_uninstall_hook( __FILE__, 'wf_plugin_uninstall');
