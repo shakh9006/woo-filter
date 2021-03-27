@@ -1,0 +1,125 @@
+body.toplevel_page_woo-filter-settings {
+  background-color: #f7f7f7;
+  font-family: "Kumbh Sans";
+  color: #23282d;
+  @import "../../partials/toaster";
+  @import "../../partials/existing";
+}
+
+.wf-settings {
+  @import "../../partials/draggable";
+  @import "../../partials/fields";
+
+  $self: &;
+  background: #fff;
+  margin: 20px 20px 20px 0;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+  min-height: calc(100vh - 150px);
+
+  #{ $self }-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  #{ $self }-container {
+    display: flex;
+    flex-direction: row;
+    min-height: calc(100vh - 150px);
+
+    &.builder {
+      #{ $self }-sidebar {
+        flex: 1;
+        max-width: 240px;
+        border-right: 1px solid #dddddd;
+
+        ul {
+          margin-top: 20px;
+
+          li {
+            margin: 0;
+            display: flex;
+            color: #44515f;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 15px 20px;
+            position: relative;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+
+            &:before {
+              left: 0;
+              height: 0;
+              bottom: 0;
+              content: '';
+              width: 4px;
+              position: absolute;
+              transition: height .2s linear;
+              background-color: #007fff;
+            }
+
+            &:hover,
+            &.active,
+            &:active {
+              opacity: 1;
+              color: #007fff;
+              background-color: #eaf4ff;
+
+              &:before {
+                height: 100%;
+              }
+            }
+
+            i {
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+
+      #{ $self }-content {
+        flex: 1;
+      }
+
+      #{ $self }-add-field {
+        flex: 1;
+        padding: 20px;
+        max-width: 370px;
+        background-color: #f7f7f7;
+        border-left: 1px solid #ddd;
+
+        button {
+          outline: none;
+        }
+
+        h3 {
+          margin-bottom: 15px;
+          font-weight: 400;
+          text-align: left;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          font-size: 18px;
+          color: #23282d;
+        }
+
+        select {
+          outline: none;
+          width: 100%;
+          display: block;
+          max-width: 100%;
+          box-shadow: none;
+          border-radius: 4px;
+          padding: 10px 20px;
+          margin-bottom: 20px;
+          box-sizing: border-box;
+          background-color: #ffffff;
+          border: 1px solid #dddddd;
+        }
+      }
+    }
+  }
+}
