@@ -116,7 +116,7 @@ class WF_Settings_data {
                 'tabs'   => self::get_tabs(),
                 'fields' => self::get_fields(),
                 'types'  => self::get_types(),
-                'used'   => self::get_used(),
+//                'used'   => self::get_used(),
 
                 'logic_options' => [
                     'and' => wf_text_domain('and'),
@@ -224,18 +224,6 @@ class WF_Settings_data {
                 ],
             ],
 
-            'on_sale' => [
-                'label'        => '',
-                'name'         => wf_text_domain('On Sale'),
-                'description'  => '',
-                'label_toggle' => true,
-                'tag'          => WF_Field::TAG_ON_SALE,
-                'type'         => WF_Field::TYPE_ON_SALE,
-                'types'        => [
-                    WF_Field::TAG_SORT_BY  => wf_text_domain('Yes No'),
-                    WF_Field::TAG_ON_SALE  => wf_text_domain('On Sale'),
-                ]
-            ],
 
             'sort_by' => [
                 'label'        => '',
@@ -314,8 +302,6 @@ class WF_Settings_data {
             WF_Field::TYPE_COLOR        => wf_text_domain('Color'),
             WF_Field::TYPE_RADIO_BUTTON => wf_text_domain('Radio'),
             WF_Field::TYPE_SORT_BY      => wf_text_domain('Sort By'),
-            WF_Field::TAG_ON_SALE       => wf_text_domain('On Sale'),
-
         ];
     }
 

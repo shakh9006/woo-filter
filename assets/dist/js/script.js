@@ -86,6 +86,91 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./assets/src/js/front/components/fields/checkbox-field.js":
+/*!*****************************************************************!*\
+  !*** ./assets/src/js/front/components/fields/checkbox-field.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./assets/src/js/front/components/fields/color-field.js":
+/*!**************************************************************!*\
+  !*** ./assets/src/js/front/components/fields/color-field.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./assets/src/js/front/components/fields/input-field.js":
+/*!**************************************************************!*\
+  !*** ./assets/src/js/front/components/fields/input-field.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  template: "\n\t\t<div>Hello world!</div>\n\t"
+});
+
+/***/ }),
+
+/***/ "./assets/src/js/front/components/fields/radio-field.js":
+/*!**************************************************************!*\
+  !*** ./assets/src/js/front/components/fields/radio-field.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./assets/src/js/front/components/fields/rating-field.js":
+/*!***************************************************************!*\
+  !*** ./assets/src/js/front/components/fields/rating-field.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./assets/src/js/front/components/fields/slider-field.js":
+/*!***************************************************************!*\
+  !*** ./assets/src/js/front/components/fields/slider-field.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  template: "\n\t\t<div>Hello 123!</div>\n\t"
+});
+
+/***/ }),
+
+/***/ "./assets/src/js/front/components/fields/sort-by-field.js":
+/*!****************************************************************!*\
+  !*** ./assets/src/js/front/components/fields/sort-by-field.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
 /***/ "./assets/src/js/front/components/main.js":
 /*!************************************************!*\
   !*** ./assets/src/js/front/components/main.js ***!
@@ -95,8 +180,54 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _fields_input_field__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./fields/input-field */ "./assets/src/js/front/components/fields/input-field.js");
+/* harmony import */ var _fields_slider_field__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./fields/slider-field */ "./assets/src/js/front/components/fields/slider-field.js");
+/* harmony import */ var _fields_checkbox_field__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./fields/checkbox-field */ "./assets/src/js/front/components/fields/checkbox-field.js");
+/* harmony import */ var _fields_checkbox_field__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_fields_checkbox_field__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _fields_color_field__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fields/color-field */ "./assets/src/js/front/components/fields/color-field.js");
+/* harmony import */ var _fields_color_field__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_fields_color_field__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _fields_radio_field__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./fields/radio-field */ "./assets/src/js/front/components/fields/radio-field.js");
+/* harmony import */ var _fields_radio_field__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_fields_radio_field__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _fields_rating_field__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./fields/rating-field */ "./assets/src/js/front/components/fields/rating-field.js");
+/* harmony import */ var _fields_rating_field__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_fields_rating_field__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _fields_sort_by_field__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./fields/sort-by-field */ "./assets/src/js/front/components/fields/sort-by-field.js");
+/* harmony import */ var _fields_sort_by_field__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_fields_sort_by_field__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  template: "\n\t\t<div>\n\t\t\t\t\t\n\t\t</div>\n\t"
+  components: {
+    'input-field': _fields_input_field__WEBPACK_IMPORTED_MODULE_0__["default"],
+    'slider-field': _fields_slider_field__WEBPACK_IMPORTED_MODULE_1__["default"],
+    'checkbox-field': _fields_checkbox_field__WEBPACK_IMPORTED_MODULE_2___default.a,
+    'color-field': _fields_color_field__WEBPACK_IMPORTED_MODULE_3___default.a,
+    'radio-field': _fields_radio_field__WEBPACK_IMPORTED_MODULE_4___default.a,
+    'rating-field': _fields_rating_field__WEBPACK_IMPORTED_MODULE_5___default.a,
+    'sort_by-field': _fields_sort_by_field__WEBPACK_IMPORTED_MODULE_6___default.a
+  },
+  data: function data() {
+    return {
+      fields: null
+    };
+  },
+  created: function created() {
+    this.fields = this.getStateByName('fields') || [];
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_7__["mapGetters"])(['getStateByName'])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_7__["mapMutations"])(['setStateByName'])),
+  template: "\n\t\t<div class=\"wf-container\">\n\t\t\t<div class=\"wf-filter-wrapper\" v-if=\"fields && fields.length > 0\">\n\t\t\t\t<div class=\"filter-item\" v-for=\"field in fields\">\n\t\t\t\t\t<component :is=\"field.type + '-field'\"></component>\n\t\t\t\t</div>\n\t\t\t</div>\t\t\n\t\t\t<div class=\"wf-product-wrapper\">\n\t\t\t\n\t\t\t</div>\n\t\t</div>\n\t"
 });
 
 /***/ }),

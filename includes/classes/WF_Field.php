@@ -15,7 +15,6 @@ class WF_Field extends BaseModel {
     const TYPE_SELECT       = 'select';
     const TYPE_CHECKBOX     = 'checkbox';
     const TYPE_RADIO_BUTTON = 'radio';
-    const TYPE_ON_SALE      = 'on_sale';
     const TYPE_RATING       = 'rating';
     const TYPE_COLOR        = 'color';
     const TYPE_SORT_BY      = 'sort_by';
@@ -24,7 +23,6 @@ class WF_Field extends BaseModel {
     const TAG_CATEGORIES    = 'product_categories';
     const TAG_TAGS          = 'product_tags';
     const TAG_SORT_BY       = 'sort_by';
-    const TAG_ON_SALE       = 'on_sale';
     const TAG_RATING        = 'rating';
     const TAG_COLOR         = 'color';
 
