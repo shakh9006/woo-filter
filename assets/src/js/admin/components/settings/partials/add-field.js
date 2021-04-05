@@ -16,7 +16,7 @@ export default {
 
 		add() {
 			this.addField({ type: this.type })
-			this.type = ''
+			setTimeout(() => this.type = '')
 		},
 	},
 

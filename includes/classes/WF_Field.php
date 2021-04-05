@@ -65,18 +65,11 @@ class WF_Field extends BaseModel {
         ];
     }
 
-    /**
-     * @param $meta_key string
-     * @param bool $flip boolean
-     *
-     * @return array|mixed|null
-     */
-    public function getMeta($meta_key, $flip = false) {
-        if ($meta = get_post_meta($this->ID, $meta_key, true) AND !empty($meta)) {
-            if (!is_array($meta))
-                $meta = maybe_unserialize($meta);
-            return ($flip) ? array_flip($meta) : $meta;
-        }
-        return null;
+    public function get_field_meta_data() {
+        return get_term_meta($this->id, 'options', true);
+    }
+
+    public function saveMeta($data) {
+        update_term_meta($this->id, 'options', wf_sanitize_array($data));
     }
 }

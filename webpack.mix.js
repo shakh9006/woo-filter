@@ -7,7 +7,7 @@ const srcPath = (extraPath, _path = 'admin') => {
 	if ( extraPath )
 		return path.resolve(__dirname, `./assets/src/js/${_path}/${extraPath}`)
 
-	return path.resolve(__dirname, `./assets/js`)
+	return path.resolve(__dirname, `./assets/src/js`)
 }
 
 const srcDist = (extraPath) => {
@@ -49,6 +49,7 @@ mix.setResourceRoot('../../')
 
 mix.setResourceRoot('../../')
 	.sass('assets/src/sass/admin/components/settings/style.scss', 'assets/dist/css/admin-settings.css')
+	.sass('assets/src/sass/front/style.scss', 'assets/dist/css/front-styles.css')
 	.disableNotifications();
 
 // Full API

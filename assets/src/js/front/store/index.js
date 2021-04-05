@@ -5,6 +5,11 @@ export default {
 		ajaxNonce: '',
 		id: null,
 		fields: [],
+		settings: {},
+		loader: false,
+		product_categories: [],
+		product_tags: [],
+		sort_by: [],
 	},
 
 	getters: {

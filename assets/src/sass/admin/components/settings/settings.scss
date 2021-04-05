@@ -1,0 +1,28 @@
+.wf-settings-tab {
+  padding: 0 !important;
+  margin: 0 !important;
+
+  .wf-settings-row {
+    padding: 35px;
+    border-bottom: 1px solid #ddd;
+
+    h3 {
+      margin: 0;
+      padding: 0;
+      color: #23282d;
+      font-size: 24px;
+      font-weight: 400;
+    }
+
+    .container {
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+
+      .col-4 {
+        margin-left: 0;
+        padding-left: 0;
+      }
+    }
+  }
+}

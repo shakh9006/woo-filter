@@ -1,7 +1,7 @@
 .wf-field {
   padding: 15px;
 
-  span {
+  .wf-title {
     text-indent: 5px;
     display: inline-block;
   }
@@ -122,8 +122,27 @@
 }
 
 .wf-admin-select {
-  span {
+  .wf-title {
     margin-bottom: 4px;
+  }
+
+  .col-sm-12 {
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+
+    .select2-selection {
+      padding: 5px 0 !important;
+      border: 1px solid #ddd !important;
+      box-shadow: none;
+      outline: none;
+      ul {
+        li {
+          margin-bottom: 0;
+          padding: 0 8px !important;
+        }
+      }
+    }
   }
 }
 

@@ -24,6 +24,55 @@ class WF_Filter extends BaseModel {
         global $wpdb;
         return $wpdb->prefix . 'posts';
     }
+
+    public $ID;
+    public $post_author;
+    public $post_date;
+    public $post_date_gmt;
+    public $post_content;
+    public $post_title;
+    public $post_excerpt;
+    public $post_status;
+    public $comment_status;
+    public $ping_status;
+    public $post_password;
+    public $post_name;
+    public $to_ping;
+    public $post_modified;
+    public $post_modified_gmt;
+    public $post_content_filtered;
+    public $post_parent;
+    public $guid;
+    public $menu_order;
+    public $post_type;
+    public $post_mime_type;
+    public $comment_count;
+    public $post;
+
+    protected $fillable = [
+        'ID',
+        'post_author',
+        'post_date',
+        'post_date_gmt',
+        'post_content',
+        'post_title',
+        'post_excerpt',
+        'post_status',
+        'comment_status',
+        'ping_status',
+        'post_password',
+        'post_name',
+        'to_ping',
+        'post_modified',
+        'post_modified_gmt',
+        'post_content_filtered',
+        'post_parent',
+        'guid',
+        'menu_order',
+        'post_type',
+        'post_mime_type',
+        'comment_count'
+    ];
     
     public static function get_searchable_fields() {
         return [
@@ -107,9 +156,12 @@ class WF_Filter extends BaseModel {
             );
             $post_id   = wp_insert_post($post_data);
             $wf_filter = WF_Filter::find_one($post_id);
-
         } else {
-            $wf_filter->post_title = sanitize_text_field($title);
+            $wf_post = array(
+                'ID'           => $id,
+                'post_title'   => sanitize_text_field($title),
+            );
+            wp_update_post( $wf_post );
         }
 
         return $wf_filter;
@@ -132,6 +184,7 @@ class WF_Filter extends BaseModel {
 
         foreach ($options as $key => $value) {
             $field    = WF_Field::create($value['save_data'])->save();
+            $field->saveMeta(wf_isset_helper($value, 'meta', []));
             WF_Filter_Fields_Relationships::create([
                 'filter_id' => $this->ID,
                 'field_id'  => $field->id,
@@ -147,19 +200,86 @@ class WF_Filter extends BaseModel {
         $result = [];
         foreach ($filters as $filter) {
             $field = WF_Field::find_one($filter->field_id);
+            $meta  = $field->get_field_meta_data();
+
             if ( ! empty($field) ) {
                 $data = [
+                    'id'           => $field->id,
                     'tag'          => $field->tag,
                     'type'         => $field->type,
                     'name'         => $field->name,
-                    'label'        => $field->title,
+                    'title'        => $field->title,
                     'label_toggle' => $field->label_toggle,
                     'description'  => $field->description,
+                    'used'         => isset( $meta['used'] ) ? array_values($meta['used']) : [],
                 ];
+
+                if ( ! empty( $meta ) )   {
+                    foreach ($meta as $k => $v) {
+                        if ( $k !== 'used' )
+                            $data[$k] = $v;
+                    }
+                }
+
                 $result[] = $data;
             }
         }
 
         return $result;
+    }
+
+    public function saveSettings($data) {
+        update_post_meta($this->ID, 'filter_settings_data', wf_sanitize_array($data));
+    }
+
+    public function render_settings() {
+        $data = get_post_meta($this->ID, 'filter_settings_data', true);
+        return ! empty( $data ) ? $data : WF_Settings_data::get_filter_settings_data();
+    }
+
+    public function get_products() {
+        $paged = isset( $_REQUEST['paged'] ) ? intval( $_REQUEST['paged'] ) : get_query_var( 'paged' );
+
+        if ( $paged < 1 ) {
+            $paged = 1;
+        }
+
+        $meta_query    = WC()->query->get_meta_query();
+        $query_args    = array(
+            'post_type'           => 'product',
+            'post_status'         => 'publish',
+            'ignore_sticky_posts' => 1,
+            'orderby'             => '',
+            'order'               => 'DESC',
+            'posts_per_page'      => 10,
+            'meta_query'          => $meta_query,
+            'tax_query'           => WC()->query->get_tax_query(),
+            'paged'               => $paged
+        );
+
+        $products = new \WP_Query( $query_args );
+
+
+        $html = '';
+
+        ob_start();
+        woocommerce_product_loop_start();
+        $loop_start = ob_get_clean();
+
+        ob_start();
+        $offset = 0;
+        while ( $products->have_posts() )  {
+            $products->the_post();
+            do_action( 'woocommerce_shop_loop' );
+            wc_get_template( 'content-product.php' );
+        }
+
+        $products = ob_get_clean();
+
+        ob_start();
+        woocommerce_product_loop_end();
+        $loop_end = ob_get_clean();
+
+        return $loop_start . $products . $loop_end;
     }
 }

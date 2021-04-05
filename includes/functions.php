@@ -86,3 +86,66 @@ function wf_isset_helper($data, $property, $default = '') {
 
     return $default;
 }
+
+/**
+ * Sanitize Array
+ *
+ * @param $items
+ *
+ * @return mixed
+
+ */
+function wf_sanitize_array($items) {
+    foreach ($items as $key => $val) {
+        if (!is_array($val))
+            $items[$key] = sanitize_text_field($val);
+        else {
+            foreach ($val as $k => $v) {
+                if (!is_array($v))
+                    $items[$key][$k] = sanitize_text_field($v);
+                else
+                    $items[$key][$k] = ulisting_sanitize_array($v);
+            }
+        }
+    }
+    return $items;
+}
+
+/**
+ * * Sanitize Array Helper
+ * @param $items
+ *
+ * @return mixed
+ */
+function wf__sanitize_array($items) {
+    if ( count($items) ) {
+        foreach ($items as $key => $val) {
+            if (!is_array($val))
+                $val = sanitize_text_field($val);
+            else {
+                foreach ($val as $k => $v) {
+                    if (!is_array($v))
+                        $v = sanitize_text_field($v);
+                    else
+                        $v = ulisting_sanitize_array($v);
+                }
+            }
+        }
+
+        return $items;
+    }
+
+    return [];
+}
+
+function wf_sanitize($data) {
+    if ( !empty($data) ) {
+        if ( is_object( $data ) || is_array( $data ) ) {
+            return wf_sanitize_array($data);
+        }
+
+        return sanitize_text_field($data);
+    }
+
+    return '';
+}
