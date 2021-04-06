@@ -15,16 +15,16 @@ class WF_Field extends BaseModel {
     const TYPE_SELECT       = 'select';
     const TYPE_CHECKBOX     = 'checkbox';
     const TYPE_RADIO_BUTTON = 'radio';
-    const TYPE_RATING       = 'rating';
-    const TYPE_COLOR        = 'color';
+//    const TYPE_RATING       = 'rating';
+//    const TYPE_COLOR        = 'color';
     const TYPE_SORT_BY      = 'sort_by';
 
     const TAG_PRICE         = 'price';
     const TAG_CATEGORIES    = 'product_categories';
     const TAG_TAGS          = 'product_tags';
     const TAG_SORT_BY       = 'sort_by';
-    const TAG_RATING        = 'rating';
-    const TAG_COLOR         = 'color';
+//    const TAG_RATING        = 'rating';
+//    const TAG_COLOR         = 'color';
 
     protected $fillable = [
         'id',

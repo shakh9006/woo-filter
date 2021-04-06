@@ -12,6 +12,9 @@ import Vuex, { mapMutations, mapGetters } from 'vuex'
  */
 
 import wfSelect from '@js/libs/select-wrapper'
+import loader from '@js/admin/components/partials/loader'
+
+Vue.component('wf-loader', loader)
 Vue.component('wf-select2', wfSelect)
 /**
  * Register Vuex and State

@@ -7,25 +7,39 @@ export default {
 			default: null,
 		},
 		field: [Object, String],
+		value: {
+			type: [String, Array, Object],
+			default: function () {
+				return []
+			},
+		}
 	},
 
 	data() {
 		return {
 			radioData: null,
+			radioValue: '',
 		}
 	},
 
 	created() {
 		if ( this.field ) {
-			console.log('field: ', this.field)
 			this.radioData = this.field
 			this.radioData.label_toggle = toggleValidator(this.radioData.label_toggle)
+			if ( this.value?.value ) {
+				let value = this.value.value
+				if ( Array.isArray(value) && value.length > 0 ) {
+					this.radioValue = value[0]
+				} else {
+					this.radioValue = ''
+				}
+			}
 		}
 	},
 
 	methods: {
-		update(value, index) {
-
+		update() {
+			this.$emit('update', this.field.tag, [this.radioValue.toString()])
 		}
 	},
 
@@ -52,7 +66,7 @@ export default {
 				<span class="wf-title wf-field-text" v-if="radioData.label_toggle">{{ radioData.title }}</span>
 				<div class="wf-radio-list">
 					<div class="wf-radio-item" v-for="radio in getRadioData">
-						<input :id="'radio_test_' + radio.id" type="radio" name="test_radio_name" :value="radio.id">
+						<input :id="'radio_test_' + radio.id" v-model="radioValue" @change="update" type="radio" name="test_radio_name" :value="radio.id">
 						<label :for="'radio_test_' + radio.id">{{ radio.text }}</label>
 					</div>
 				</div>

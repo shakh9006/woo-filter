@@ -65,6 +65,16 @@ export default {
 			}
 		},
 
+		column: {
+			get() {
+				return this.settings?.column
+			},
+
+			set(value) {
+				return this.settings = { name: 'column', value }
+			}
+		},
+
 		position: {
 			get() {
 				return this.settings?.position
@@ -108,6 +118,12 @@ export default {
 				<h3>View Options</h3>
 				<div class="container">
 					<div class="row">
+						<div class="col-4">
+							<div class="wf-input-field wf-field">
+								<span class="wf-title">Products Column</span> 
+								<input placeholder="Enter Label"  type="text" v-model="column">
+							</div>
+						</div>
 						<div class="col-4">
 							<div class="wf-input-field wf-field">
 								<span class="wf-title">Products count</span> 

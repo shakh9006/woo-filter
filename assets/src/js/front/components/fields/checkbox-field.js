@@ -7,25 +7,35 @@ export default {
 			default: null,
 		},
 		field: [Object, String],
+		value: {
+			type: [String, Array, Object],
+			default: function () {
+				return []
+			},
+		}
 	},
 
 	data() {
 		return {
 			checkboxData: null,
+			checkboxList: [],
 		}
 	},
 
 	created() {
 		if ( this.field ) {
-			console.log('field: ', this.field)
 			this.checkboxData = this.field
 			this.checkboxData.label_toggle = toggleValidator(this.checkboxData.label_toggle)
+
+			if ( this.value?.value ) {
+				this.checkboxList = this.value?.value
+			}
 		}
 	},
 
 	methods: {
-		update(value, index) {
-
+		update() {
+			this.$emit('update', this.field.tag, this.checkboxList)
 		}
 	},
 
@@ -39,6 +49,7 @@ export default {
 			options = options.filter((element) => {
 				let used = this.checkboxData.used || []
 				if (used.indexOf(element.id.toString()) !== -1) {
+					element.id = element.id.toString()
 					return element
 				}
 			})
@@ -53,7 +64,7 @@ export default {
 				<div class="wf-checkbox-list">
 					<template v-if="checkboxData.view_type === 'default'">
 						<div class="wf-checkbox-field"  v-for="checkbox in getCheckboxData" :key="checkbox.id">
-							<input type="checkbox" :id="checkbox.id + '_checkbox'" :value="checkbox.id"> 
+							<input type="checkbox" :id="checkbox.id + '_checkbox'" @change="update" v-model="checkboxList" :value="checkbox.id"> 
 							<label :for="checkbox.id + '_checkbox'">
 								<span class="wf-checkbox-text uListing-normalize">
 									{{ checkbox.text }}
@@ -64,7 +75,7 @@ export default {
 					<template v-else>
 						<div class="wf-switch-field" v-for="toggle in getCheckboxData" :key="toggle.id">
 							<label class="wf-switch">
-								<input type="checkbox" :value="toggle.id">
+								<input type="checkbox" :value="toggle.id" @change="update" v-model="checkboxList">
 								<div class="wf-slider wf-round"></div>
 							</label>
 							<span class="wf-title wf-switch-text wf-normalize">{{ toggle.text }}</span>

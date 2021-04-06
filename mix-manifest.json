@@ -2,9 +2,5 @@
     "/assets/dist/js/admin.js": "/assets/dist/js/admin.js",
     "/assets/dist/css/admin-settings.css": "/assets/dist/css/admin-settings.css",
     "/assets/dist/css/front-styles.css": "/assets/dist/css/front-styles.css",
-    "/assets/dist/js/admin.js.map": "/assets/dist/js/admin.js.map",
-    "/assets/dist/css/admin-settings.css.map": "/assets/dist/css/admin-settings.css.map",
-    "/assets/dist/css/front-styles.css.map": "/assets/dist/css/front-styles.css.map",
-    "/assets/dist/js/script.js": "/assets/dist/js/script.js",
-    "/assets/dist/js/script.js.map": "/assets/dist/js/script.js.map"
+    "/assets/dist/js/script.js": "/assets/dist/js/script.js"
 }

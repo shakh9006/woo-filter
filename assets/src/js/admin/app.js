@@ -2,7 +2,6 @@
  * Import Components
  */
 import mainSettings from './components/settings'
-import loader from './components/partials/loader'
 
 /**
  * Import packages
@@ -22,7 +21,7 @@ Vue.use(Vuelidate)
  */
 import color from 'vue-color'
 import wfSelect from '@js/libs/select-wrapper'
-
+import loader from './components/partials/loader'
 Vue.component('wf-loader', loader)
 Vue.component('wf-select2', wfSelect)
 Vue.component('colour-picker', color.Slider)

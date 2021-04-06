@@ -7,11 +7,15 @@ export default {
 			default: null,
 		},
 		field: [Object, String],
+		value: {
+			default: '',
+		}
 	},
 
 	data() {
 		return {
 			sortData: null,
+			defaultValue: '',
 		}
 	},
 
@@ -19,12 +23,15 @@ export default {
 		if ( this.field ) {
 			this.sortData = this.field
 			this.sortData.label_toggle = toggleValidator(this.sortData.label_toggle)
+
+			if ( this.value )
+				this.defaultValue = this.value?.value || ''
 		}
 	},
 
 	methods: {
-		update(value, index) {
-
+		update(value) {
+			this.$emit('update', this.field.tag, value)
 		}
 	},
 
@@ -52,7 +59,7 @@ export default {
 	template: `
 			<div class="wf-select wf-field mb-10" v-if="sortData">
 				<span class="wf-title wf-field-text" v-if="sortData.label_toggle">{{ sortData.title }}</span>
-				<wf-select2 :key="'product-categories-' + sortData.id" @update="update" :content="getSortData" :index="sortData.id" :selected="[]"></wf-select2>
+				<wf-select2 :key="'product-categories-' + sortData.id" @update="update" :content="getSortData" :index="sortData.id" :selected="defaultValue"></wf-select2>
 			</div>
 	`
 }

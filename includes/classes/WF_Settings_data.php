@@ -21,8 +21,7 @@ class WF_Settings_data {
             $wf_filter        = WF_Filter::find_one($filter_id);
             $data['fields']   = $wf_filter->get_used();
             $data['settings'] = $wf_filter->render_settings();
-            $data['products'] = $wf_filter->get_products();
-                wf_write_log($data['products']);
+            $data['products'] = $wf_filter->get_products(wf_isset_helper($_GET, 'params', ''));
             /**
              * Woo Data
              */
@@ -196,6 +195,25 @@ class WF_Settings_data {
         wp_send_json($result);
     }
 
+    public static function wf_filter_update() {
+        $result = [
+            'message'  => wf_text_domain('Permission denied.'),
+            'success'  => false,
+            'status'   => 'error',
+            'products' => '',
+        ];
+
+        if ( ! empty( $_POST['id'] ) ) {
+            $filter_id          = $_POST['id'];
+            $wf_filter          = WF_Filter::find_one($filter_id);
+            $result['products'] = $wf_filter->get_products(wf_isset_helper($_POST, 'params', ''));
+            $result['message']  = wf_text_domain('Filter Data updated successfully');
+            $result['success']  = true;
+        }
+
+        wp_send_json($result);
+    }
+
     /**
      * Fields store
      * @return array
@@ -227,7 +245,6 @@ class WF_Settings_data {
                 'min'          => 0,
                 'max'          => 100,
                 'step'         => 1,
-                'is_multi'     => false,
                 'tag'          => WF_Field::TAG_PRICE,
                 'type'         => WF_Field::TYPE_SLIDER,
                 'types'        => [
@@ -393,8 +410,9 @@ class WF_Settings_data {
         $all_categories = get_categories( $args );
 
         if ( !empty( $all_categories ) ) {
-            foreach ( $all_categories as $category )
-                $data[] = ['id' => $category->term_id, 'text' => $category->name];
+            foreach ( $all_categories as $category ) {
+                $data[] = ['id' => $category->term_id, 'text' => $category->name, 'slug' => $category->slug];
+            }
         }
 
         return $data;
@@ -406,7 +424,7 @@ class WF_Settings_data {
 
         if ( ! empty( $terms ) && ! is_wp_error( $terms ) ){
             foreach ( $terms as $term ) {
-                $term_array[] = ['id' => $term->term_id, 'text' => $term->name];
+                $term_array[] = ['id' => $term->term_id, 'text' => $term->name, 'slug' => $term->slug];
             }
         }
 
@@ -450,8 +468,6 @@ class WF_Settings_data {
         return [
             [ 'id' => 'left',   'text' => wf_text_domain('Left') ],
             [ 'id' => 'right',  'text' => wf_text_domain('Right') ],
-            [ 'id' => 'top',    'text' => wf_text_domain('Top') ],
-            [ 'id' => 'bottom', 'text' => wf_text_domain('Bottom') ],
         ];
     }
 
@@ -464,6 +480,7 @@ class WF_Settings_data {
 
     public static function get_filter_settings_data() {
         return [
+            'column'   => '4',
             'order'    => 'asc',
             'order_by' => 'id',
             'count'    => -1,
