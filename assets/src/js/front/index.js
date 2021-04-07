@@ -10,11 +10,12 @@ import Vuex, { mapMutations, mapGetters } from 'vuex'
 /**
  * Register global components
  */
-// import vueSelect2 from '@dist/vue-select2'
-import vSelect    from "vue-select";
-Vue.component("v-select", vSelect);
-// Vue.component('ulisting-select2', vueSelect2)
 
+import wfSelect from '@js/libs/select-wrapper'
+import loader from '@js/admin/components/partials/loader'
+
+Vue.component('wf-loader', loader)
+Vue.component('wf-select2', wfSelect)
 /**
  * Register Vuex and State
  */
@@ -33,7 +34,6 @@ new Vue({
 			this.setStateByName({name: 'ajaxUrl', value: wf_front_data.ajaxUrl})
 			this.setStateByName({name: 'ajaxNonce', value: wf_front_data.ajaxNonce})
 			this.setStateByName({name: 'id', value: wf_front_data.id})
-			this.setStateByName({name: 'fields', value: wf_front_data.fields})
 		}
 	},
 

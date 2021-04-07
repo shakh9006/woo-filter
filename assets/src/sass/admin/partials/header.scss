@@ -1,0 +1,26 @@
+.wf-settings-header {
+  .wf-filter-title-fixed,
+  .wf-filter-title-left {
+    color: #23282d;
+    font-size: 24px;
+    font-weight: 400;
+
+  }
+
+  button,
+  .wf-filter-title-left,
+  .wf-filter-title-editable {
+    margin-right: 10px;
+  }
+
+  .wf-filter-title-fixed {
+    border-bottom: 2px dotted #44515e;
+    padding-bottom: 3px;
+    cursor: pointer;
+
+    i {
+      font-size: 18px;
+    }
+  }
+
+}

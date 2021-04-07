@@ -5,7 +5,7 @@ import settings    from '../tabs/settings'
 import customize   from '../tabs/customize'
 
 export default {
-	props: ['content',  'logic_options', 'view_options'],
+	props: ['content',  'logic_options', 'view_options', 'categories', 'tags'],
 
 	data() {
 		return {
@@ -42,7 +42,7 @@ export default {
 			<div class="container">
 				<div class="row">
 					<keep-alive>
-						<component :logic_options="logic_options" :view_options="view_options" :content="prop_data" :is="getPropertyByName('active_tab')"></component>
+						<component :content="prop_data" :is="getPropertyByName('active_tab')"></component>
 					</keep-alive>
 				</div>
 			</div>

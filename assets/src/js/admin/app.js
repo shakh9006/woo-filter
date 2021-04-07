@@ -19,12 +19,11 @@ Vue.use(Vuelidate)
 /**
  * Register global components
  */
-// import vueSelect2 from '@dist/vue-select2'
-import vSelect    from "vue-select";
 import color from 'vue-color'
-
-Vue.component("v-select", vSelect);
-// Vue.component('ulisting-select2', vueSelect2)
+import wfSelect from '@js/libs/select-wrapper'
+import loader from './components/partials/loader'
+Vue.component('wf-loader', loader)
+Vue.component('wf-select2', wfSelect)
 Vue.component('colour-picker', color.Slider)
 
 /**
@@ -38,12 +37,14 @@ const store = new Vuex.Store(state)
  */
 new Vue({
 	store,
+
 	el: '#wf-app',
 
 	mounted() {
 		if ( typeof wf_settings_data !== "undefined" ) {
-			this.setPropertyByName({name: 'ajaxUrl', value: wf_settings_data.ajaxUrl})
-			this.setPropertyByName({name: 'ajaxNonce', value: wf_settings_data.ajaxNonce})
+			this.setPropertyByName({ name: 'ajaxUrl',   value: wf_settings_data.ajaxUrl })
+			this.setPropertyByName({ name: 'ajaxNonce', value: wf_settings_data.ajaxNonce })
+			this.setPropertyByName({ name: 'filter_id', value: wf_settings_data.id || null })
 		}
 	},
 

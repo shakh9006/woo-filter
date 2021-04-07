@@ -1,17 +1,19 @@
 import { getRequest, postRequest, renderToast } from '@utils/index';
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
 
 	data() {
 		return {
-			list: [],
+
 		}
 	},
 
 	created() {
+		this.loader = true
 		const url = this.getPropertyByName('ajaxUrl')
 		getRequest(url, {action: 'wf_filter_list'}, response => {
+			this.loader = false
 			this.list = response.filters || []
 		})
 	},
@@ -19,14 +21,41 @@ export default {
 	computed: {
 		...mapGetters([
 			'getPropertyByName'
-		])
+		]),
+
+		list: {
+			get() {
+				return this.getPropertyByName('list') || []
+			},
+
+			set(value) {
+				this.setPropertyByName({name: 'list', value})
+			}
+		},
+
+		loader: {
+			get() {
+				return this.getPropertyByName('loader')
+			},
+
+			set(value) {
+				this.setPropertyByName({name: 'loader', value})
+			}
+		},
 	},
 
 	methods: {
+		...mapMutations([
+			'setPropertyByName',
+		]),
+
 		deleteFilter(id) {
 			if ( confirm('Are you sure to delete this filter?')) {
+				this.loader = true
 				const url = this.getPropertyByName('ajaxUrl')
+
 				postRequest(url, {action: 'wf_delete_filter', id}, response => {
+					this.loader = false
 					renderToast(response.message, response.status)
 					if ( response.success )
 						this.list = this.list.filter(l => l.ID !== id)
@@ -41,7 +70,7 @@ export default {
 	},
 
 	template: `
-		<div style="flex: 1">
+		<div style="flex: 1" v-if="!loader">
 			<div class="existing-header">
 				<div class="existing-header__title">
 					<i class="fas fa-stream"></i>
@@ -63,7 +92,7 @@ export default {
 						<div class="list-title id">{{filter.ID}}</div>
 						<div class="list-title title">{{filter.post_title ? filter.post_title : 'Empty'}}</div>
 						<div class="list-title shortcode">
-							<span>[wf-filter- id="{{filter.ID}}"]</span>
+							<span>[wf-filter id="{{filter.ID}}"]</span>
 						</div>
 						<div class="list-title actions" style="display: flex; justify-content: space-evenly;">
 							<div class="ccb-tooltip action" @click.prevent="editFilter(filter.edit)">
