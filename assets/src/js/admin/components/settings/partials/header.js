@@ -49,9 +49,9 @@ export default {
 			'setPropertyByName'
 		]),
 
-		save() {
+		save(id) {
 			const url = this.getPropertyByName('ajaxUrl')
-			this.saveSettings({url})
+			this.saveSettings({url, id})
 		},
 
 		save_title() {
@@ -59,10 +59,12 @@ export default {
 		},
 
 		back_to_lit() {
+			const id = this.id
 			this.setPropertyByName({name: 'filter_id', value: null})
 			this.setPropertyByName({name: 'returned', value: true})
+
 			if ( confirm('Save this filter?') ) {
-				this.save()
+				this.save(id)
 				setTimeout(() => {
 					this.update_list()
 					this.step = 'home'
@@ -78,7 +80,6 @@ export default {
 			let params = new URLSearchParams(location.search)
 			params.delete('id')
 			history.replaceState(null, '', '?' + params + location.hash)
-			console.log(window.location.href)
 		},
 
 		update_list() {
@@ -128,7 +129,7 @@ export default {
 					[wf-filter id='{{ id }}']
 				</span>
 				<button type="button" class="btn btn-secondary btn-lg" @click.prevent="back_to_lit">Back to List</button>
-				<button type="button" class="btn btn-primary btn-lg" @click.prevent="save">Save Settings</button>		
+				<button type="button" class="btn btn-primary btn-lg" @click.prevent="save(id)">Save Settings</button>		
 			</div>
 			<button type="button" class="btn btn-primary btn-lg" @click.prevent="create_new" v-else>Create New</button>
 		</div>

@@ -27,7 +27,7 @@ class WF_AdminMenu {
             'woo-filter-settings',
             [$this, 'wf_render_settings'],
             'dashicons-index-card',
-            5
+            110
         );
     }
 

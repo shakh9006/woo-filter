@@ -50,16 +50,4 @@ function wf_plugin_create_table() {
 	
 	) $charset_collate;";
     maybe_create_table($table_name_listing_attribute_relationships, $sql);
-
-    $table_name_ulisting_attribute_relationsh_meta = $wpdb->prefix . 'wf_field_relationship_meta';
-    $sql = "CREATE TABLE $table_name_ulisting_attribute_relationsh_meta (
-		id bigint(20) NOT NULL AUTO_INCREMENT,      
-		relations_id bigint(20) NOT NULL,
-		meta_key varchar(250) NOT NULL,
-		meta_value varchar(250) NOT NULL,
-		PRIMARY KEY  (id),         
-		KEY `wf_field_relationship_meta_relations_id_index` (`relations_id`),
-		CONSTRAINT `" .$wpdb->prefix. "wf_field_relationship_meta_relations_id_foreign` FOREIGN KEY (`relations_id`) REFERENCES $table_name_listing_attribute_relationships (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-	) $charset_collate;";
-    maybe_create_table($table_name_ulisting_attribute_relationsh_meta, $sql);
 }

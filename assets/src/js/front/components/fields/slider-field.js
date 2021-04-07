@@ -87,6 +87,7 @@ export default {
 						<span> {{ leftVal }} - {{ rightVal }} </span>
 					</div>
 					<div :class="['wf_range_' + field.id]"></div>
+					<p class="wf-field-description" v-if="rangeField.description">{{ rangeField.description }}</p>
 				</div>
 			</div>
 	`

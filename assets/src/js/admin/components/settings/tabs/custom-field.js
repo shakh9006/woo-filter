@@ -81,7 +81,7 @@ export default {
 					e.label_toggle = toggleValidator(e.label_toggle)
 					return e
 				})
-				console.log('used: ', used)
+
 				if ( this.used_search )
 					return used.filter( e => this.filterByInput(e, this.used_search))
 

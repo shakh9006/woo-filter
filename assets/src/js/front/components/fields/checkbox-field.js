@@ -29,13 +29,14 @@ export default {
 
 			if ( this.value?.value ) {
 				this.checkboxList = this.value?.value
+				this.update()
 			}
 		}
 	},
 
 	methods: {
 		update() {
-			this.$emit('update', this.field.tag, this.checkboxList)
+			this.$emit('update', this.field.tag, this.checkboxList, this.field.logic)
 		}
 	},
 
@@ -81,6 +82,7 @@ export default {
 							<span class="wf-title wf-switch-text wf-normalize">{{ toggle.text }}</span>
 						</div>
 					</template>
+					<p class="wf-field-description" v-if="checkboxData.description">{{ checkboxData.description }}</p>
 				</div>
 			</div>
 	`

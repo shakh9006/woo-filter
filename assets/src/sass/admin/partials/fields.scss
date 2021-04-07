@@ -1,6 +1,11 @@
 .wf-field {
   padding: 15px;
 
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
   .wf-title {
     text-indent: 5px;
     display: inline-block;

@@ -239,7 +239,7 @@ class WF_Filter extends BaseModel {
         return ! empty( $data ) ? $data : WF_Settings_data::get_filter_settings_data();
     }
 
-    public function get_products($param = '') {
+    public function get_products($param = '', $relations = '') {
         $paged = isset( $_REQUEST['paged'] ) ? intval( $_REQUEST['paged'] ) : get_query_var( 'paged' );
         if ( $paged < 1 ) {
             $paged = 1;
@@ -265,11 +265,13 @@ class WF_Filter extends BaseModel {
                 if ( in_array($k, ['product_cat', 'product_tag']) ) {
                     $v = urldecode($v);
                     $v = explode(",", $v);
+                    $relation = wf_isset_helper($relations, $k, 'IN');
+                    $relation = strtolower($relation) === 'and' ? 'AND' : 'IN';
                     $this->taxonomies[] = [
                         'taxonomy' => $k,
                         'field'    => 'slug',
                         'terms'    => $v,
-                        'operator' => 'IN',
+                        'operator' => $relation,
                         'include_children' => 1,
                     ];
                 }
@@ -285,6 +287,12 @@ class WF_Filter extends BaseModel {
 
         $this->query_args['wf_filter_active'] = true;
 
+
+        $columns = apply_filters( 'loop_shop_columns', 4 );
+        if ( isset( $this->render_settings()['column'] ) )
+            $columns = $this->render_settings()['column'];
+
+        wc_set_loop_prop( 'columns', $columns );
 
         add_filter( 'pre_get_posts',   [$this, 'wf_pre_get_posts'], 99999, 1 );
         add_filter( 'parse_tax_query', [$this, 'wf_parse_tax_query'], 99999, 1 );
@@ -334,8 +342,13 @@ class WF_Filter extends BaseModel {
                 $orderby_value = isset( $this->params['orderby'] ) ? wc_clean( (string) $this->params['orderby'] ) : $default_order;
                 $orderby_value = explode( '-', $orderby_value );
                 $orderby       = esc_attr( $orderby_value[0] );
-                $order         = $_order ? ( $_order == 'DESC' ? 'DESC' : 'ASC' ) : ( isset( $orderby_value[1] ) && !empty( $orderby_value[1] ) ? $orderby_value[1] : '' );
 
+                if ( !empty( $orderby_value[1]) &&  $orderby_value[1] === 'desc' ) {
+                    $order = 'DESC';
+                } else {
+                    $order = $_order ? ( $_order == 'DESC' ? 'DESC' : 'ASC' ) : ( isset( $orderby_value[1] ) && !empty( $orderby_value[1] ) ? $orderby_value[1] : '' );
+
+                }
                 $orderby = strtolower( $orderby );
                 $order   = strtoupper( $order );
 

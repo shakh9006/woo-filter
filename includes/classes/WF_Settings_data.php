@@ -15,13 +15,11 @@ class WF_Settings_data {
             'data'    => [],
         ];
 
-        if ( ! empty(  $_GET['id'] ) ) {
+        if ( ! empty( $_GET['id'] && $wf_filter = WF_Filter::find_one($_GET['id']) ) ) {
             $data             = [];
-            $filter_id        = $_GET['id'];
-            $wf_filter        = WF_Filter::find_one($filter_id);
             $data['fields']   = $wf_filter->get_used();
+            $data['texts']    = self::general_texts();
             $data['settings'] = $wf_filter->render_settings();
-            $data['products'] = $wf_filter->get_products(wf_isset_helper($_GET, 'params', ''));
             /**
              * Woo Data
              */
@@ -166,8 +164,8 @@ class WF_Settings_data {
                 'used'      => self::get_used(),
 
                 'logic_options' => [
-                    'and' => wf_text_domain('and'),
-                    'or'  => wf_text_domain('or'),
+                    'and' => wf_text_domain('AND'),
+                    'in'  => wf_text_domain('IN'),
                 ],
 
                 'view_options' => [
@@ -206,7 +204,9 @@ class WF_Settings_data {
         if ( ! empty( $_POST['id'] ) ) {
             $filter_id          = $_POST['id'];
             $wf_filter          = WF_Filter::find_one($filter_id);
-            $result['products'] = $wf_filter->get_products(wf_isset_helper($_POST, 'params', ''));
+            $params             = wf_isset_helper($_POST, 'params', '');
+            $relations          = wf_isset_helper($_POST, 'relations', '');
+            $result['products'] = $wf_filter->get_products($params, $relations);
             $result['message']  = wf_text_domain('Filter Data updated successfully');
             $result['success']  = true;
         }
@@ -258,7 +258,7 @@ class WF_Settings_data {
                 'description'  => '',
                 'label_toggle' => true,
                 'is_multi'     => false,
-                'logic'        => 'or',
+                'logic'        => 'in',
                 'tag'          => WF_Field::TAG_CATEGORIES,
                 'type'         => WF_Field::TYPE_SELECT,
                 'used'         => [],
@@ -287,7 +287,7 @@ class WF_Settings_data {
                 'name'         => wf_text_domain('Checkbox'),
                 'description'  => '',
                 'label_toggle' => true,
-                'logic'        => 'or',
+                'logic'        => 'in',
                 'view_type'    => 'default',
                 'used'         => [],
                 'tag'          => WF_Field::TAG_CATEGORIES,
@@ -486,6 +486,13 @@ class WF_Settings_data {
             'count'    => -1,
             'position' => 'left',
             'is_ajax'  => 'yes',
+        ];
+    }
+
+    public static function general_texts() {
+        return [
+            'apply' => wf_text_domain('Apply Filter'),
+            'reset' => wf_text_domain('Reset Filter'),
         ];
     }
 }

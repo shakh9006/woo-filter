@@ -45,7 +45,7 @@ export default {
 
 	methods: {
 		update(value) {
-			this.$emit('update', this.field.tag, value)
+			this.$emit('update', this.field.tag, value, this.field.logic)
 		}
 	},
 
@@ -73,6 +73,7 @@ export default {
 			<div class="wf-select wf-field mb-10" v-if="selectData">
 				<span class="wf-title wf-field-text" v-if="selectData.label_toggle">{{ selectData.title }}</span>
 				<wf-select2 :key="'product-categories-' + selectData.id"  :content="getSelectData" :index="selectData.id" :selected="defaultValue" @update="update"></wf-select2>
+				<p class="wf-field-description" v-if="selectData.description">{{ selectData.description }}</p>
 			</div>
 	`
 }

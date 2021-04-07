@@ -25,6 +25,7 @@ export default {
 
 	data() {
 		return {
+			texts: null,
 			loader: true,
 			count: 0,
 			product_template: '',
@@ -37,25 +38,22 @@ export default {
 	created() {
 		const ajaxUrl = this.getStateByName('ajaxUrl')
 		const id 	  = this.getStateByName('id')
-		const params  = this.getSearchParameters()
-
-		getRequest(ajaxUrl, {action: 'wf_filter_front_data', id, params}, response => {
-			const { settings, fields, product_categories, product_tags, sort_by, products } = response?.data
+		getRequest(ajaxUrl, {action: 'wf_filter_front_data', id}, response => {
+			const { settings, fields, product_categories, texts, product_tags, sort_by } = response?.data
 			this.setStateByName({name: 'settings', value: settings})
 			this.setStateByName({name: 'fields',   value: fields})
-			this.product_template = products
 			/**
 			 * Set Woo Data
 			 */
 
+			this.texts				= texts
 			this.product_tags 		= product_tags
 			this.product_categories = product_categories
 			this.setStateByName({name: 'product_categories',   value: product_categories})
 			this.setStateByName({name: 'product_tags',   	   value: product_tags})
 			this.setStateByName({name: 'sort_by',   		   value: sort_by})
 			this.renderDefaultValues()
-
-			setTimeout(() => this.loader = false, 500)
+			setTimeout(() => this.render_products())
 		})
 	},
 
@@ -126,9 +124,9 @@ export default {
 			}
 		},
 
-		update(type, value) {
+		update(type, value, relation) {
 			if ( type )
-				this.filter_data[type] = { value, type }
+				this.filter_data[type] = { value, type, relation }
 		},
 
 
@@ -183,29 +181,45 @@ export default {
 				return false
 			} else {
 				this.loader = true
-				const ajaxUrl = this.getStateByName('ajaxUrl')
-				const id 	  = this.getStateByName('id')
-				const params  = this.getSearchParameters()
-
-				postRequest(ajaxUrl, {action: 'wf_filter_update', id, params}, response => {
-					const { products } = response
-					this.product_template = products
-					setTimeout(() => this.loader = false, 500)
-				})
+				this.render_products()
 			}
 		},
 
-		getSearchParameters() {
-			var prmstr = window.location.search.substr(1);
-			return prmstr != null && prmstr != "" ? this.transformToAssocArray(prmstr) : {};
+		render_products() {
+			const ajaxUrl = this.getStateByName('ajaxUrl')
+			const id 	  = this.getStateByName('id')
+			const params  = this.getSearchParameters()
+
+			const relations 	= {}
+			const relation_data = ['product_categories', 'product_tags']
+
+			Object.keys(this.filter_data).forEach(key_name => {
+				if ( relation_data.indexOf(key_name) !== -1 && ( params.hasOwnProperty('product_cat') ||  params.hasOwnProperty('product_tag') ) ) {
+					let param_key = key_name === 'product_categories' ? 'product_cat' : 'product_tag'
+					let current   = this.filter_data[key_name]
+					if ( typeof params[param_key] !== "undefined" ) {
+						relations[param_key] = current.relation
+					}
+				}
+			})
+			postRequest(ajaxUrl, {action: 'wf_filter_update', id, params, relations}, response => {
+				const { products } = response
+				this.product_template = products
+				setTimeout(() => this.loader = false, 500)
+			})
 		},
 
-		transformToAssocArray( prmstr ) {
-			var params = {};
-			var prmarr = prmstr.split("&");
-			for ( var i = 0; i < prmarr.length; i++) {
-				var tmparr = prmarr[i].split("=");
-				params[tmparr[0]] = tmparr[1];
+		getSearchParameters() {
+			let prm_str = window.location.search.substr(1);
+			return prm_str != null && prm_str != "" ? this.transformToAssocArray(prm_str) : {};
+		},
+
+		transformToAssocArray( param_str ) {
+			let params = {};
+			let param_r = param_str.split("&");
+			for ( let i = 0; i < param_r.length; i++) {
+				let tm_parr = param_r[i].split("=");
+				params[tm_parr[0]] = tm_parr[1];
 			}
 			return params;
 		},
@@ -221,20 +235,33 @@ export default {
 
 			return []
 		},
+
+		clear_filter() {
+			const params  = this.getSearchParameters()
+			this.filter_data = {}
+			Object.keys(params).forEach(name => this.delete_param(name))
+		},
+
+		delete_param(name) {
+			let params = new URLSearchParams(location.search)
+			params.delete(name)
+			history.replaceState(null, '', '?' + params + location.hash)
+		},
 	},
 
 	template: `
 		<div class="wf-container container" >
-			<div class="row" v-if="!loader" :class="get_class">
+			<div class="row" v-show="!loader" :class="get_class">
 				<div class="wf-filter-wrapper col-4" v-if="fields && fields.length > 0">
 					<div class="filter-item" v-for="(field, index) in fields">
 						<component @update="update" :is="field.type + '-field'" :field="field" :key="index" v-model="filter_data[field.tag]"></component>
 					</div>
-					<button class="wf-btn" @click.prevent="applyChanges">Apply changes</button>
+					<button class="wf-btn" @click.prevent="applyChanges">{{ texts && texts.apply }}</button>
+					<span style="display: block; cursor: pointer" @click.prevent="clear_filter">{{ texts && texts.reset }}</span>
 				</div>		
 				<div class="wf-product-wrapper col-8 woocommerce" v-html="product_template"></div>
 			</div>
-			<wf-loader v-else></wf-loader>
+			<wf-loader v-if="loader"></wf-loader>
 		</div>
 	`
 }

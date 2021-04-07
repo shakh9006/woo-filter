@@ -79,13 +79,14 @@ export default {
 			}
 		},
 
-		saveSettings({state, getters}, {url}) {
+		saveSettings({state, getters}, {url, id}) {
 			state.loader = true
+			const filter_id = id ? id : state.filter_id
 			const data = {
+				id      : filter_id,
 				action	: 'wf_save_settings',
 				fields	: getters.getReadyState,
 				title 	: state.title,
-				id		: state.filter_id,
 				settings: state.filter_settings,
 			}
 

@@ -125,9 +125,9 @@ export default {
 							</div>
 						</div>
 						<div class="col-4">
-							<div class="wf-input-field wf-field">
+							<div class="wf-input-field wf-field disabled">
 								<span class="wf-title">Products count</span> 
-								<input placeholder="Enter Label"  type="text" v-model="count">
+								<input placeholder="Enter Label"  type="text" v-model="count" disabled>
 							</div>
 						</div>
 						<div class="col-4">
