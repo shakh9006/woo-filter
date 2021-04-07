@@ -44,6 +44,7 @@ export default {
 			<div class="wf-input-field wf-field mb-10">
 				<span class="wf-input-title" v-if="inputData.label_toggle">{{ inputData.title }}</span>
 				<input :placeholder="inputData.placeholder" type="number" v-model="inputValue" @change="update" @input="update">
+				<p class="wf-field-description" v-if="inputData.description">{{ inputData.description }}</p>
 			</div>
 	`
 }

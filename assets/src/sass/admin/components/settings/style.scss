@@ -95,6 +95,14 @@ body.toplevel_page_woo-filter-settings {
         background-color: #f7f7f7;
         border-left: 1px solid #ddd;
 
+        @media only screen and (max-width: 1560px) {
+          max-width: 300px !important;
+        }
+
+        @media only screen and (max-width: 1440px) {
+          max-width: 270px !important;
+        }
+
         button {
           outline: none;
         }
